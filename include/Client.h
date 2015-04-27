@@ -135,15 +135,15 @@ public:
      */
     void interrupt();
 
-    /*
-     * If one of the run family of methods is running on another thread, this
-     * method will instruct it to exit as soon as it finishes it's current 
-     * immediate task. If the thread in the run method is blocked/idle, then
-     * it will return immediately.
-     * The difference from the interrupt is it stops only currently running loop,
-     * and has no effect if the loop isn,t running
-     */ 
-     void wakeup();
+   /*
+    * If one of the run family of methods is running on another thread, this
+    * method will instruct it to exit as soon as it finishes it's current 
+    * immediate task. If the thread in the run method is blocked/idle, then
+    * it will return immediately.
+    * The difference from the interrupt is it stops only currently running loop,
+    * and has no effect if the loop isn,t running
+    */
+    void wakeup();
 
     /*
      * Return true if the two Clients being compared points to the same ClientImpl

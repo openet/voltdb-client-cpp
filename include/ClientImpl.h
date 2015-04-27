@@ -147,6 +147,11 @@ private:
     void updateHashinator();
 
     /*
+     * Calls a volt procedure to subscribe to topology notifications
+     */
+    void subscribeToTopologyNotifications();
+
+    /*
      * Get the buffered event based on transaction routing algorithm
      */
     struct bufferevent *routeProcedure(Procedure &proc, ScopedByteBuffer &sbb);
@@ -173,10 +178,10 @@ private:
     BEVToCallbackMap m_callbacks;
     boost::shared_ptr<voltdb::StatusListener> m_listener;
     bool m_invocationBlockedOnBackpressure;
-    bool m_loopBreakRequested;
+    boost::atomic<bool> m_loopBreakRequested;
     bool m_isDraining;
     bool m_instanceIdIsSet;
-    int32_t m_outstandingRequests;
+    boost::atomic<int32_t> m_outstandingRequests;
     //Identifier of the database instance this client is connected to
     int64_t m_clusterStartTime;
     int32_t m_leaderAddress;
@@ -194,10 +199,10 @@ private:
     boost::atomic<size_t> m_pendingConnectionSize;
     boost::mutex m_pendingConnectionLock;
 
-    int m_wakeupPipe[2];
-    boost::mutex m_wakeupPipeLock;
-
     ClientLogger* m_pLogger;
+
+    static const int64_t VOLT_NOTIFICATION_MAGIC_NUMBER;
+
 };
 }
 #endif /* VOLTDB_CLIENTIMPL_H_ */

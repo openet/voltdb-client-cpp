@@ -64,6 +64,7 @@ public:
      ProcedureInfo* getProcedure(const std::string& procName) throw (UnknownProcedureException);
      int getHashedPartitionForParameter(ByteBuffer &paramBuffer, int parameterId);
      int getHostIdByPartitionId(int partitionId);
+     void handleTopologyNotification(const std::vector<voltdb::Table>& t);
      static const int MP_INIT_PID;
 
 private:
@@ -76,6 +77,8 @@ private:
      boost::scoped_ptr<TheHashinator> m_hashinator;
 
      static boost::shared_mutex m_procInfoLock;
+
+     voltdb::Table m_savedTopoTable;
 };
 
 }
