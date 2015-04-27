@@ -264,7 +264,7 @@ m_affinityEnabled(true) {
     SHA_CTX context;
     SHA1_Init(&context);
     SHA1_Update(&context, reinterpret_cast<const unsigned char*>(config.m_password.data()), config.m_password.size());
-    SHA1_Final(&context, m_passwordHash);
+    SHA1_Final(m_passwordHash, &context);
 
     m_ioThreads.create_thread(boost::bind(&boost::asio::io_service::run, &m_service));
 }

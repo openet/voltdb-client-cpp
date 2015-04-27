@@ -303,7 +303,7 @@ ClientImpl::ClientImpl(ClientConfig config) throw(voltdb::Exception, voltdb::Lib
     SHA1_CTX context;
     SHA1_Init(&context);
     SHA1_Update( &context, reinterpret_cast<const unsigned char*>(config.m_password.data()), config.m_password.size());
-    SHA1_Final (  m_passwordHash,&context);
+    SHA1_Final (  &context,m_passwordHash);
 }
 
 class FreeBEVOnFailure {
@@ -461,10 +461,6 @@ void ClientImpl::createConnection(const std::string& hostname, const unsigned sh
     std::stringstream ss;
     ss << "ClientImpl::createConnection" << " hostname:" << hostname << " port:" << port;
     logMessage(ClientLogger::INFO, ss.str());
-
-	std::stringstream ss;
-	ss << "ClientImpl::createConnection" << " hostname:" << hostname << " port:" << port;
-	logMessage(ClientLogger::INFO, ss.str());
 
 	PendingConnectionSPtr pc(new PendingConnection(hostname, port, m_base, this));
     initiateConnection(pc);
